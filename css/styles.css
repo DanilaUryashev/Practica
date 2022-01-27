@@ -238,7 +238,7 @@ background: #E5E5E5;
 }
 .table{
   position: absolute;
-  top: 400px;
+  top: 320px;
   margin-left: 35px;
   max-width: 1674px;
   height: 271px;
@@ -271,5 +271,23 @@ margin-left: -1px;
   font-size: 25px;
   line-height: 74px;
   text-align: center;
-
+}
+.rating{
+  display: flex;
+}
+.rating-block{
+    display: flex;
+}
+.column{
+  margin-top: 2px;
+}
+.cell-rating{
+  margin-left: -1px;
+  margin-top: -1px;
+  width: 54px;
+  height: 33px;
+  border: 1px solid red;
+  font-size: 25px;
+  line-height: 33px;
+  text-align: center;
 }
