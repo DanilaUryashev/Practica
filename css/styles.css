@@ -238,13 +238,38 @@ background: #E5E5E5;
 }
 .table{
   position: absolute;
-  width: 1764px;
-  height: 570px;
-  margin-top: 510px;
+  top: 400px;
   margin-left: 35px;
-  background: black;
+  max-width: 1674px;
+  height: 271px;
+  display: block;
 }
-.cell{
-  max-width: 100%;
-  min-height: 50px;
+.discip-block{
+  display: block;
+  margin-top: 2px;
+}
+.discip-cell{
+  margin-top: -1px;
+  width: 291px;
+  height: 33px;
+  border: 1px solid red;
+  text-align: center;
+  font-size: 25px;
+  line-height: 33px;
+}
+.data-block{
+margin-left: 293px;
+  height: 74px;
+  max-width: 1674px;
+  display: flex;
+}
+.data-cell{
+margin-left: -1px;
+  width: 54px;
+  height: 74px;
+  border: 1px solid red;
+  font-size: 25px;
+  line-height: 74px;
+  text-align: center;
+
 }

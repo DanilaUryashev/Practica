@@ -1,8 +1,8 @@
 <?php
 include 'ConnServer.php';
 session_start();
-$idd=$_SESSION['user']["id"];
-$sql= "SELECT * FROM Departament_Head WHERE ID='$idd'";
+$id=$_POST($_SESSION['user']["id"]);
+$sql= "SELECT * FROM Departament_Head WHERE ID='$id'";
 $params = array();
 $options =  array( "Scrollable" => SQLSRV_CURSOR_KEYSET );
 $stmt = sqlsrv_query( $conn, $sql , $params, $options );
