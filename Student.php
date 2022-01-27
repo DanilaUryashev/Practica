@@ -68,17 +68,28 @@ $sum_column=0;
      </form>
       <div class="table">
         <div class="data-block">
+          <div class="select_date">
+
+          </div>
           <!-- ЦИКЛ ДЛЯ ВЫВОДА ДАТ В ТАБЛИЦУ -->
             <?php
-            $sql_date= "SELECT DATEPART(day,Date) as Day FROM Ratings WHERE DATEPART(month,Date)=$month";
+            $sql_date= "SELECT DATEPART(day,Date) as Day FROM Ratings WHERE DATEPART(month,Date)=$month ORDER BY Date ASC";
             $quer_date = sqlsrv_query( $conn, $sql_date , $params, $options );
             $date = sqlsrv_fetch_array($quer_date,SQLSRV_FETCH_ASSOC);
+            $old_date1=0;
               do{
+                if($old_date1==$date){
+
+            }
+            else{
               printf ("<div class='data-cell'>%s</div>",$date["Day"]);
+            }
               $sum_column=$sum_column+1;
+              $old_date1=$date;
               }
               while ($date = sqlsrv_fetch_array($quer_date,SQLSRV_FETCH_ASSOC));
              ?>
+             <div class='data-cell'><p class="avg-text">Средняя</p></div>
         </div>
         <div class="rating">
         <div class="discip-block">
@@ -100,38 +111,74 @@ $sum_column=0;
            <!-- ЦИКЛ ДЛЯ ВЫВОДА ОЦЕНОК В ТАБЛИЦУ -->
          <?php
             $b=0;
+            $old_date=0;
+            $sql_date1= "SELECT DATEPART(day,Date) as Day FROM Ratings WHERE DATEPART(month,Date)=$month ORDER BY Date ASC";
+            $quer_date1 = sqlsrv_query( $conn, $sql_date1 , $params, $options );
             // СОЗДАНИЕ СТОЛБЦОВ С ОЦЕНКАМИ
             do{
+              $date1 = sqlsrv_fetch_array($quer_date1,SQLSRV_FETCH_ASSOC);
               printf ("<div class='column'>");
               $b=$b+1;
               $a=0;
-              $sqldis2= "SELECT Discipline.ID_Discipline
+              if($old_date==$date1){
+
+              }
+              else{
+                $sqldis2= "SELECT Discipline.ID_Discipline
+                 FROM Group_Discipline INNER JOIN Discipline ON (Group_Discipline.ID_Discipline=Discipline.ID_Discipline)
+                WHERE Group_Discipline.ID_Group=$Group";
+                $qurdis2 = sqlsrv_query( $conn, $sqldis2 , $params, $options );
+                $dis2 = sqlsrv_fetch_array($qurdis2,SQLSRV_FETCH_ASSOC);
+                // СОЗДАНИЕ КЛЕТОК С ОЦЕНКАМИ
+                do{
+                  // НАХОДИМ ПРЕДМЕТ В ДАННОЙ СТРОКЕ
+                  // НАХОДИМ ОЦЕНКУ ПО ПРЕДМЕТУ В ТАКУЮ ДАТУ
+                  $sqlrat= "SELECT Rating FROM Ratings WHERE ID_Student=$id AND ID_Discipline=$dis2[ID_Discipline] AND DATEPART(day,Date)=$date1[Day]";
+                  $querrat = sqlsrv_query( $conn, $sqlrat , $params, $options );
+                  $rat = sqlsrv_fetch_array($querrat,SQLSRV_FETCH_ASSOC);
+                  if(isset($rat["Rating"])){
+                    printf ("<div class='cell-rating'>%s</div>",$rat["Rating"]);
+                  }
+                  else {
+                    printf ("<div class='cell-rating'></div>");
+                  }
+                  $a=$a+1;
+                  $dis2 = sqlsrv_fetch_array($qurdis2,SQLSRV_FETCH_ASSOC);
+                }
+                while ($a < $sum_rows);
+              }
+              printf ("</div>");
+              $old_date=$date1;
+            }
+            while ($b < $sum_column );
+            ?>
+            <?php
+            printf ("<div class='column'>");
+            $c=0;
+            $sqldis3= "SELECT Discipline.ID_Discipline
                FROM Group_Discipline INNER JOIN Discipline ON (Group_Discipline.ID_Discipline=Discipline.ID_Discipline)
               WHERE Group_Discipline.ID_Group=$Group";
-              $qurdis2 = sqlsrv_query( $conn, $sqldis2 , $params, $options );
+            $qurdis3 = sqlsrv_query( $conn, $sqldis3 , $params, $options );
+            $dis3 = sqlsrv_fetch_array($qurdis3,SQLSRV_FETCH_ASSOC);
+            do{
+
+              $sqlavg= "SELECT ROUND(AVG(CONVERT(float,Rating)),2) AS avg FROM Ratings WHERE Rating <>'Н' AND Rating <>'н' AND ID_Student=$id AND ID_Discipline=$dis3[ID_Discipline]";
+              $queravg = sqlsrv_query( $conn, $sqlavg , $params, $options );
+              $avg = sqlsrv_fetch_array($queravg,SQLSRV_FETCH_ASSOC);
+              printf ("<div class='cell-rating'>%s</div>",$avg["avg"]);
+              $c=$c+1;
               $dis2 = sqlsrv_fetch_array($qurdis2,SQLSRV_FETCH_ASSOC);
-              // СОЗДАНИЕ КЛЕТОК С ОЦЕНКАМИ
-              do{
-                // НАХОДИМ ПРЕДМЕТ В ДАННОЙ СТРОКЕ
-                // НАХОДИМ ОЦЕНКУ ПО ПРЕДМЕТУ В ТАКУЮ ДАТУ
-                $sqlrat= "SELECT Rating FROM Ratings WHERE ID_Student=$id AND ID_Discipline=$dis2[ID_Discipline] AND Date='2022-01-27'";
-                $querrat = sqlsrv_query( $conn, $sqlrat , $params, $options );
-                $rat = sqlsrv_fetch_array($querrat,SQLSRV_FETCH_ASSOC);
-                if(isset($rat["Rating"])){
-                  printf ("<div class='cell-rating'>%s</div>",$rat["Rating"]);
-                }
-                else {
-                  printf ("<div class='cell-rating'></div>");
-                }
-                $a=$a+1;
-                $dis2 = sqlsrv_fetch_array($qurdis2,SQLSRV_FETCH_ASSOC);
-              }
-              while ($a < $sum_rows);
-              printf ("</div>");
             }
-            while ($b < $sum_column);
-          ?>
+            while ($c < $sum_rows and $dis3 = sqlsrv_fetch_array($qurdis3,SQLSRV_FETCH_ASSOC));
+            printf ("</div>");
+             ?>
+
+
+
+
+
          </div>
+
         </div>
       </div>
    </main>

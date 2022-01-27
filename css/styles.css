@@ -258,7 +258,7 @@ background: #E5E5E5;
   line-height: 33px;
 }
 .data-block{
-margin-left: 293px;
+margin-left: 2px;
   height: 74px;
   max-width: 1674px;
   display: flex;
@@ -290,4 +290,32 @@ margin-left: -1px;
   font-size: 25px;
   line-height: 33px;
   text-align: center;
+}
+.avg-cell{
+  margin-left: -1px;
+    margin-top: 1px;
+    width: 54px;
+    height: 74px;
+    border: 1px solid red;
+
+}
+.avg-text{
+transform: rotate(-90deg);
+font-size: 20px;
+margin-top: 10px;
+color: red;
+}
+.select_date{
+  width: 291px;
+  height: 74px;
+  border: 1px;
+  font-size: 30px;
+  line-height: 74px;
+  text-align: center;
+}
+.btn{
+
+font-size: 30px;
+font-weight: bolder;
+text-decoration: none;
 }
