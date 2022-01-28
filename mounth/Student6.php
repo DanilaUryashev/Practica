@@ -1,5 +1,5 @@
 <?php
-include 'ConnServer.php';
+include '../ConnServer.php';
 session_start();
 $id=$_SESSION['user']["id"];
 // ПРИМЕР SQL ЗАПРОСА
@@ -20,7 +20,7 @@ FROM Group_Discipline INNER JOIN Discipline ON (Group_Discipline.ID_Discipline=D
 WHERE Group_Discipline.ID_Group=$Group";
 $qurdis = sqlsrv_query( $conn, $sqldis , $params, $options );
 $dis = sqlsrv_fetch_array($qurdis,SQLSRV_FETCH_ASSOC);
-$month=8;
+$month=2;
 $sum_rows=0;
 $sum_column=0;
 ?>
@@ -29,11 +29,11 @@ $sum_column=0;
  <head>
   <meta charset="UTF-8">
   <title>Студент</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
  <body class="body-prof">
    <header class="header_sys">
-    <img class="logo-sys"src="Images/Logo.png">
+    <img class="logo-sys"src="../Images/Logo.png">
     <p class="text-logo">Успеваемость студентов</p>
     <p class="Role">Студент</p>
     <p class="Username"><?= $_SESSION['useraut']['surname']?> <?= $_SESSION['useraut']['name']?></p>
@@ -69,7 +69,7 @@ $sum_column=0;
       <div class="table">
         <div class="data-block">
           <div class="select_date">
-            <a href="" class="btn"></a>  Сентябрь  <a href="mounth/Student1.php" class="btn">></a>
+            <a href="Student5.php" class="btn"><</a>Февраль<a href="Student7.php"class="btn">></a>
           </div>
           <!-- ЦИКЛ ДЛЯ ВЫВОДА ДАТ В ТАБЛИЦУ -->
             <?php

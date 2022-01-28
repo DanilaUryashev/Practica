@@ -1,5 +1,5 @@
 <?php
-include 'ConnServer.php';
+include '../ConnServer.php';
 session_start();
 $id=$_SESSION['user']["id"];
 // ПРИМЕР SQL ЗАПРОСА
@@ -20,7 +20,7 @@ FROM Group_Discipline INNER JOIN Discipline ON (Group_Discipline.ID_Discipline=D
 WHERE Group_Discipline.ID_Group=$Group";
 $qurdis = sqlsrv_query( $conn, $sqldis , $params, $options );
 $dis = sqlsrv_fetch_array($qurdis,SQLSRV_FETCH_ASSOC);
-$month=8;
+$month=6;
 $sum_rows=0;
 $sum_column=0;
 ?>
@@ -29,11 +29,11 @@ $sum_column=0;
  <head>
   <meta charset="UTF-8">
   <title>Студент</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
  <body class="body-prof">
    <header class="header_sys">
-    <img class="logo-sys"src="Images/Logo.png">
+    <img class="logo-sys"src="../Images/Logo.png">
     <p class="text-logo">Успеваемость студентов</p>
     <p class="Role">Студент</p>
     <p class="Username"><?= $_SESSION['useraut']['surname']?> <?= $_SESSION['useraut']['name']?></p>
@@ -69,7 +69,7 @@ $sum_column=0;
       <div class="table">
         <div class="data-block">
           <div class="select_date">
-            <a href="" class="btn"></a>  Сентябрь  <a href="mounth/Student1.php" class="btn">></a>
+            <a href="Student9.php" class="btn"><</a>Июнь
           </div>
           <!-- ЦИКЛ ДЛЯ ВЫВОДА ДАТ В ТАБЛИЦУ -->
             <?php
@@ -90,6 +90,7 @@ $sum_column=0;
               while ($date = sqlsrv_fetch_array($quer_date,SQLSRV_FETCH_ASSOC));
              ?>
              <div class='data-cell'><p class="avg-text">Средняя</p></div>
+             <div class='sem-cell'><p class="sem-text">II</p></div>
         </div>
         <div class="rating">
         <div class="discip-block">
@@ -172,8 +173,26 @@ $sum_column=0;
             while ($c < $sum_rows and $dis3 = sqlsrv_fetch_array($qurdis3,SQLSRV_FETCH_ASSOC));
             printf ("</div>");
              ?>
+             <?php
+             printf ("<div class='column'>");
+             $c=0;
+             $sqldis4= "SELECT Discipline.ID_Discipline
+                FROM Group_Discipline INNER JOIN Discipline ON (Group_Discipline.ID_Discipline=Discipline.ID_Discipline)
+               WHERE Group_Discipline.ID_Group=$Group";
+             $qurdis4 = sqlsrv_query( $conn, $sqldis4 , $params, $options );
+             $dis4 = sqlsrv_fetch_array($qurdis4,SQLSRV_FETCH_ASSOC);
+             do{
 
+               $sqlavg= "SELECT ROUND(AVG(CONVERT(float,Rating)),2) AS avg FROM Ratings WHERE Rating <>'Н' AND Rating <>'н' AND ID_Student=$id AND ID_Discipline=$dis4[ID_Discipline] AND DATEPART(month,Date) <7";
+               $queravg = sqlsrv_query( $conn, $sqlavg , $params, $options );
+               $avg = sqlsrv_fetch_array($queravg,SQLSRV_FETCH_ASSOC);
+               printf ("<div class='sem_cell-rating'>%s</div>",$avg["avg"]);
+               $c=$c+1;
 
+             }
+             while ($c < $sum_rows and $dis4 = sqlsrv_fetch_array($qurdis4,SQLSRV_FETCH_ASSOC));
+             printf ("</div>");
+              ?>
 
 
 

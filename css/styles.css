@@ -240,7 +240,7 @@ background: #E5E5E5;
   position: absolute;
   top: 320px;
   margin-left: 35px;
-  max-width: 1674px;
+
   height: 271px;
   display: block;
 }
@@ -260,7 +260,7 @@ background: #E5E5E5;
 .data-block{
 margin-left: 2px;
   height: 74px;
-  max-width: 1674px;
+
   display: flex;
 }
 .data-cell{
@@ -318,4 +318,47 @@ color: red;
 font-size: 30px;
 font-weight: bolder;
 text-decoration: none;
+}
+.sem-text{
+font-size: 40px;
+line-height: 54px;
+color: white;
+}
+.sem-cell{
+  margin-left: -1px;
+    width: 36px;
+    height: 56px;
+
+    text-align: center;
+    background-color: red;
+    border: 10px   ridge rgba(229,30,30,.6);
+}
+.sem_cell-rating{
+  margin-left: -1px;
+  margin-top: -1px;
+  width: 50px;
+  height: 29px;
+  border: 3px solid red;
+  font-size: 25px;
+  line-height: 33px;
+  text-align: center;
+}
+.teacher_data-cell{
+  margin-left: -1px;
+    width: 40px;
+    height: 74px;
+    border: 1px solid red;
+    font-size: 25px;
+    line-height: 74px;
+    text-align: center;
+}
+.teacher_cell-rating{
+  margin-left: -1px;
+  margin-top: -1px;
+  width: 40px;
+  height: 33px;
+  border: 1px solid red;
+  font-size: 25px;
+  line-height: 33px;
+  text-align: center;
 }
