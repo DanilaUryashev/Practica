@@ -42,13 +42,13 @@ $sum_column=0;
          <div class="block-filter">
          <p class="searc-dis">Предмет:</p>
          <select class="input_filter input_discip" name="Disciplin_search">
-            <option class="input_filter" value="1">Все</option>
+            <option class="input_filter" value="1">Математика</option>
          </select>
          </div>
           <div class="block-filter">
           <p class="searc-dis">Группа:</p>
           <select class="input_filter input_discip" name="Disciplin_search">
-             <option class="input_filter" value="1">Все</option>
+             <option class="input_filter" value="1">ПР-315</option>
           </select>
           </div>
         </div>
@@ -92,17 +92,16 @@ $sum_column=0;
 
            $b=0;
            $keyrating=0;
-           
-
            do {
              printf ("<div class='teacher_column'>");
              $sqlstud= "SELECT ID FROM Student WHERE Group_ID=1";
              $qurstud = sqlsrv_query( $conn, $sqlstud , $params, $options );
              $stud= sqlsrv_fetch_array($qurstud,SQLSRV_FETCH_ASSOC);
              $c=0;
+             $d=$b+1;
                        do {
                          $keyrating=$keyrating+1;
-                         $sqlrat= "SELECT Rating FROM Ratings WHERE ID_Discipline=1 AND DATEPART(day,Date)=$b AND DATEPART(month,Date)=$month AND ID_Student=$stud[ID]";
+                         $sqlrat= "SELECT Rating FROM Ratings WHERE ID_Discipline=1 AND DATEPART(day,Date)=$d AND DATEPART(month,Date)=$month AND ID_Student=$stud[ID]";
                          $querrat = sqlsrv_query( $conn, $sqlrat , $params, $options );
                          $rat = sqlsrv_fetch_array($querrat,SQLSRV_FETCH_ASSOC);
                          if(isset($rat["Rating"])){

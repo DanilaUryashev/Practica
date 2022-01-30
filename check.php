@@ -20,7 +20,7 @@ function my_session_regenerate_id() {
     // ВНИМАНИЕ: Никогда не используйте конфиденциальные строки в качестве префикса!
     $newid = session_create_id('myprefix-');
     // Установка временной метки удаления. Данные активной сессии не должны удаляться сразу же.
-    $_SESSION['deleted_time'] = time(13333);
+    $_SESSION['deleted_time'] = time();
     // Завершение сессии
     session_commit();
     // Убеждаемся в возможности установки пользовательского идентификатора сессии
@@ -44,7 +44,6 @@ my_session_regenerate_id();
 ini_set('session.cookie_domain', '.free74092.cpsite.ru');
 session_set_cookie_params(7200, "/", ".free74092.cpsite.ru", false, false);
 include 'ConnServer.php';
-$_SESSION['test']='Есть сессия';
 header('Content-Type: text/html; charset=utf8');
 mb_internal_encoding('UTF-8');
 $login =filter_var(trim($_POST['login']),FILTER_SANITIZE_STRING);
